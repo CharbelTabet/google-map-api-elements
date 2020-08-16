@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      "use strict";
+
+      let map;
+
+      function initMap() {
+        let centerLocation = {
+            lat: 33.894317,
+            lng: 35.5002621
+        }
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: centerLocation,
+          zoom: 14.8
+        });
+        let locations = [
+            ['33.8875641', '35.4941989'],
+            ['33.8880683', '35.4870818'],
+            ['33.8856033', '35.4787357'],
+            ['33.894317', '35.5002621']
+        ];
+        let i;
+        let marker;
+        for (i = 0; i < locations.length; i++) {  
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                map: map
+            })}
+        };
+        fetch('/api/locations')
+          .then(response => response.json())
+          .then(json => console.log(json.locations))
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
